@@ -6,5 +6,6 @@
     <string name="action_settings">Settings</string>
     <string name="main_greeting_string">Welcome to the super awesome alarm of the future...</string>
     <string name="button_main_set_alarm">Set alarm</string>
+    <string name="title_activity_dismiss_alarm">DismissAlarm</string>
 
 </resources>

@@ -26,13 +26,24 @@ public class AlarmService extends IntentService {
 
     private void sendNotification(String msg){
         Log.d("AlarmService", "Preparing to send notification..:" + msg);
-        alarmNotificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
-        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, new Intent(this, MainActivity.class), 0);
 
-        NotificationCompat.Builder alarmNotificationBuilder = new NotificationCompat.Builder(this).setContentTitle("Alarm").setSmallIcon(R.drawable.ic_launcher).setStyle(new NotificationCompat.BigTextStyle().bigText(msg)).setContentText(msg);
+        alarmNotificationManager = (NotificationManager)
+                this.getSystemService(Context.NOTIFICATION_SERVICE);
+        PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
+                new Intent(this, MainActivity.class), 0);
 
-        alarmNotificationBuilder.setContentIntent(contentIntent);
+        NotificationCompat.Builder alarmNotificationBuilder = new NotificationCompat.Builder(this)
+                .setContentTitle("Alarm").setSmallIcon(R.drawable.ic_launcher)
+                .setStyle(new NotificationCompat.BigTextStyle().bigText(msg)).setContentText(msg);
+
+        PendingIntent contentIntent2 = PendingIntent.getActivity(this, 0,
+                new Intent(this, DismissAlarm.class), 0);
+
+        alarmNotificationBuilder.setContentIntent(contentIntent)
+                .addAction(R.drawable.ic_launcher, "--Dismiss--", contentIntent2).build();
+
         alarmNotificationManager.notify(1, alarmNotificationBuilder.build());
+
         Log.d("AlarmService", "Notification Sent");
     }
 }

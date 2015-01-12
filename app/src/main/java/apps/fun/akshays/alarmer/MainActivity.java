@@ -40,7 +40,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         alarmTimePicker = (TimePicker) findViewById(R.id.alarmTimePicker);
         alarmTextView = (TextView) findViewById(R.id.alarmText);
-        alarmManager = (AlarmManager ) getSystemService(ALARM_SERVICE);
+        alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
     }
     public void onToggleClicked(View view){
         if (((ToggleButton) view).isChecked()){
@@ -54,6 +54,15 @@ public class MainActivity extends Activity {
             pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, myIntent, 0);
             alarmManager.set(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent);
 
+
+
+            Calendar calendar2 = Calendar.getInstance();
+            calendar2.set(Calendar.HOUR_OF_DAY, alarmTimePicker.getCurrentHour());
+            calendar2.set(Calendar.MINUTE, alarmTimePicker.getCurrentMinute() + 2);
+
+            Intent myIntent2 = new Intent(MainActivity.this, AlarmReceiver.class);
+            pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, myIntent2, 0);
+            alarmManager.set(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent);
 
         } else{
             alarmManager.cancel(pendingIntent);

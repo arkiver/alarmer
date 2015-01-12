@@ -13,18 +13,21 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.v4.content.WakefulBroadcastReceiver;
 
-public class AlarmReceiver extends WakefulBroadcastReceiver{
+public class AlarmReceiver extends WakefulBroadcastReceiver {
+    static Ringtone ringtone;
+
     public void onReceive(final Context context, Intent intent){
         // Wil update the UI with message
         MainActivity inst = MainActivity.instance();
         inst.setAlarmText("Time to wake up!");
 
         Uri alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+
         if(alarmUri == null){
             alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         }
-        Ringtone ringtone = RingtoneManager.getRingtone(context, alarmUri);
 
+        ringtone = RingtoneManager.getRingtone(context, alarmUri);
         ringtone.play();
 
         // will send a notification message
@@ -34,5 +37,8 @@ public class AlarmReceiver extends WakefulBroadcastReceiver{
         startWakefulService(context, intent.setComponent(comp));
 
         setResultCode(Activity.RESULT_OK);
+    }
+    public void stopPlayingRingtone(){
+        ringtone.stop();
     }
 }
